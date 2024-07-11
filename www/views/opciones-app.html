@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Public/css/output.css">
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+    <script src="Public/js/jquery/dist/jquery.js"></script>
+    <script src="Public/js/partialview.js"></script>
+    <title>OPCIONES</title>
+</head>
+<body class="items-center text-center flex-col">
+
+    <div class="p-5 bg-cyan-600">
+        <div class="absolute mt-2">
+            <button><img src="Public/assets/bx-arrow-back.svg" class="view-back"></button>
+        </div>
+        <div class="flex-col flex items-center">  
+            <h1 class="text-center text-2xl font-righteous text-white">
+                ¿QUÉ DESEAS HACER?
+            </h1>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4 p-4 mt-20">
+      
+      <button class="deaf-option w-40 h-40 bg-cyan-600 text-white font-righteous rounded-lg shadow-lg hover:bg-green-700 transition duration-300">
+        HABLAR CON TEXTO <!--AUDIO-->
+      </button>
+      <button class="good-option w-40 h-40 bg-cyan-600 text-white font-righteous rounded-lg shadow-lg hover:bg-red-700 transition duration-300">
+        HABLAR CON DICTADO DE VOZ <!--TEXTO SIN ESCUCHARSE-->
+      </button>
+      <button class="cardiac-option mt-5 w-40 h-40 bg-cyan-600 text-white font-righteous rounded-lg shadow-lg hover:bg-red-700 transition duration-300">
+        CALCULAR MI RITMO CARDIACO 
+      </button>
+      <button class="dictionary-option mt-5 w-40 h-40 bg-cyan-600 text-white font-righteous rounded-lg shadow-lg hover:bg-yellow-700 transition duration-300">
+        DICCIONARIO LENGUA DE SEÑAS
+      </button>
+
+    </div>
+
+    <script>
+      
+        document.querySelector('.view-back').addEventListener('click', function() {
+            loadPartialView('home-app', '.init', false);
+        });
+
+        document.querySelector('.deaf-option').addEventListener('click', function() {
+            loadPartialView('deaf-app', '.init', false);
+        });
+
+        document.querySelector('.good-option').addEventListener('click', function() {
+            loadPartialView('talk-app', '.init', false);
+        });
+
+        document.querySelector('.cardiac-option').addEventListener('click', function() {
+            loadPartialView('ritmo-app', '.init', false);
+        });
+
+        document.querySelector('.dictionary-option').addEventListener('click', function() {
+            loadPartialView('dict-app', '.init', false);
+        });
+        
+    </script>
+
+  </body>
+</html>

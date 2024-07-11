@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Public/css/output.css">
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+    <script src="Public/js/jquery/dist/jquery.js"></script>
+    <script src="Public/js/partialview.js"></script>
+    <title>HOME</title>
+</head>
+<body class="items-center text-center flex-col">
+
+    <audio id="audio-welcome" src="Public/assets/BIENVENIDO.mpeg" autoplay></audio>
+
+    <div class="p-5 bg-cyan-600">
+        <div class="mt-2 absolute">
+            <button class="mute-button w-4">
+                <img src="Public/assets/volumen.svg" class="callate-porfa" alt="Volume Icon">
+            </button>
+        </div>
+        <div class="flex flex-col text-center items-center">
+            <h1 class="text-2xl text-center items-center flex flex-col font-righteous text-white">
+                SIGNTALKER
+            </h1>
+        </div>
+    </div>
+
+    <img src="Public/assets/PORTADITA.png" class="w-max items-center mt-20 flex flex-col text-center">
+
+    <div class="items-center flex flex-col text-center mt-10">
+        <button class="view-button w-80 rounded-md text-white bg-cyan-600 hover:bg-cyan-800 font-extrabold p-3 mt-10 font-righteous">COMENZAR</button>
+    </div>
+
+    <script>
+        const audioWelcome = document.getElementById('audio-welcome');
+        const muteButton = document.querySelector('.mute-button');
+        const volumeIcon = document.querySelector('.callate-porfa');
+        const volumeOnIcon = 'Public/assets/volumen.svg';
+        const volumeOffIcon = 'Public/assets/barra-de-volumen.svg'; 
+        let recognition;
+        let isListening = false;
+
+        muteButton.addEventListener('click', function() {
+            if (audioWelcome.paused) {
+                audioWelcome.currentTime = 0;
+                audioWelcome.play();
+                volumeIcon.src = volumeOnIcon;
+                if (isListening) {
+                    recognition.start();
+                }
+            } else {
+                audioWelcome.pause();
+                volumeIcon.src = volumeOffIcon;
+                if (isListening) {
+                    recognition.stop();
+                }
+            }
+        });
+
+        const audioStart = new Audio('Public/assets/sonido.mp3');
+
+        audioWelcome.addEventListener('ended', function() {
+            audioStart.play();
+            setTimeout(function() {
+                startListening();
+            }, 1000); 
+        });
+
+        function startListening() {
+            recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.lang = 'es-ES';
+            isListening = true;
+            recognition.start();
+
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript.toLowerCase();
+                console.log(transcript);
+
+                if (transcript.includes('comenzar')) {
+                    setTimeout(function() {
+                        loadPartialView('opciones-app', '.init', false);
+                    }, 1000);
+                }
+            }
+
+            recognition.onerror = function(event) {
+                console.error('Error en el reconocimiento de voz:', event.error);
+            }
+
+            recognition.onend = function() {
+                if (!audioWelcome.paused) {
+                    recognition.start();
+                }
+            }
+        }
+
+        document.querySelector('.view-button').addEventListener('click', function() {
+            loadPartialView('opciones-app', '.init', false);
+        });
+        
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Deaf App</title>
+    <style>
+        @import 'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css';
+        body { font-family: 'Righteous', sans-serif; }
+    </style>
+</head>
+<body class="flex items-center justify-center flex-col text-center">
+
+    <div class="p-5 bg-cyan-600 w-full flex items-center justify-between relative">
+        <button><img src="Public/assets/bx-arrow-back.svg" class="view-back"></button>
+        <h1 class="text-center text-2xl font-righteous text-white">
+            VOZ A TEXTO
+        </h1>
+        <button id="infoButton"><img src="Public/assets/informacion.svg" class="view-back"></button>
+    </div>
+
+    <div class="flex flex-col items-center text-center mt-12">
+        <textarea id="text-input" rows="10" cols="25" placeholder="La transcripción aparecerá aquí..." class="bg-gray-200 text-gray-700 p-3 rounded-lg"></textarea>
+        <br>
+        <button onclick="startListening()" class="mt-4 w-72 flex items-center justify-center">
+            <img src="Public/assets/micro.svg" alt="Microphone" class="w-72">
+        </button>
+    </div>  
+
+    
+
+    <div id="infoModal" class="fixed z-10 inset-0 overflow-y-auto hidden">
+        <div class="flex items-center justify-center min-h-screen bg-gray-900 bg-opacity-50">
+            <div class="bg-white rounded-lg p-6 text-center shadow-lg">
+                <h2 class="text-2xl font-righteous mb-4">VOZ A TEXTO</h2>
+                <p class="mb-4 font-righteous">Presiona el microfono para que puedas grabar, en el chart aparecerá lo que dijiste. Para parar la grabacion
+                    presiona el icono del microfono que aparece en tu pantalla.
+                </p>
+                <button class="font-righteous text-white bg-cyan-600 hover:bg-cyan-700 py-2 px-4 rounded" id="understoodButton">Entendido</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function startListening() {
+            window.plugins.speechRecognition.isRecognitionAvailable(function(available) {
+                if (available) {
+                    window.plugins.speechRecognition.requestPermission(function() {
+                        window.plugins.speechRecognition.startListening(function(result) {
+                            document.getElementById('text-input').value = result.join(' ');
+                            document.getElementById('alerta-grabando').classList.add('hidden');
+                        }, function(err) {
+                            console.error('Error en el reconocimiento de voz:', err);
+                            document.getElementById('alerta-grabando').classList.add('hidden');
+                        }, {
+                            language: "es-ES",
+                            showPopup: true
+                        });
+
+                        document.getElementById('alerta-grabando').classList.remove('hidden');
+                    }, function(err) {
+                        console.error('Permiso denegado:', err);
+                    });
+                } else {
+                    console.log("El reconocimiento de voz no está disponible en este dispositivo.");
+                    alert("El reconocimiento de voz no está disponible en este dispositivo.");
+                }
+            }, function(err) {
+                console.error('Error al comprobar la disponibilidad del reconocimiento de voz:', err);
+            });
+        }
+
+        function stopListening() {
+            window.plugins.speechRecognition.stopListening(function() {
+                document.getElementById('alerta-grabando').classList.add('hidden');
+            }, function(err) {
+                console.error('Error al detener el reconocimiento de voz:', err);
+            });
+        }
+
+        document.addEventListener('deviceready', function() {
+            document.querySelector('.view-back').addEventListener('click', function() {
+                loadPartialView('opciones-app', '.init', false);
+            });
+
+            var modal = document.getElementById('infoModal');
+            var btn = document.getElementById('infoButton');
+            var closeBtn = document.getElementById('understoodButton');
+
+            btn.onclick = function() {
+                modal.classList.remove('hidden');
+            }
+
+            closeBtn.onclick = function() {
+                modal.classList.add('hidden');
+            }
+        }, false);
+
+       
+        var modal = document.getElementById('infoModal');
+
+        var btn = document.getElementById('infoButton');
+
+        var closeBtn = document.getElementById('understoodButton');
+ 
+        btn.onclick = function() {
+            modal.classList.remove('hidden');
+        }
+
+        closeBtn.onclick = function() {
+            modal.classList.add('hidden');
+        }
+
+        document.querySelector('.view-back').addEventListener('click', function() {
+            loadPartialView('opciones-app', '.init', false);
+        });
+
+    </script>
+</body>
+</html>

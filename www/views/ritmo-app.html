@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OPCIONES</title>
+</head>
+<body class="items-center text-center flex-col">
+
+    <div class="p-5 bg-cyan-600 w-full flex items-center justify-between relative">
+        <button><img src="Public/assets/bx-arrow-back.svg" class="view-back"></button>
+        <h1 class="text-center text-2xl font-righteous text-white">
+            RITMO CARDIACO
+        </h1>
+        <button id="infoButton"><img src="Public/assets/informacion.svg" class="view-back"></button>
+    </div>
+
+    <script>
+        document.querySelector('.view-back').addEventListener('click', function() {
+      loadPartialView('audio-app', '.init', false);
+      });
+  </script>
+
+</body>
