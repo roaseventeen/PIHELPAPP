@@ -3,22 +3,179 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OPCIONES</title>
+    <title>Formulario de Información</title>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Righteous', sans-serif;
+        }
+        #calculationModal, #reportModal {
+            display: none;
+        }
+    </style>
 </head>
-<body class="items-center text-center flex-col">
+<body class="bg-gray-100 flex items-center justify-center min-h-screen relative">
 
     <div class="p-5 bg-cyan-600 w-full flex items-center justify-between relative">
         <button><img src="Public/assets/bx-arrow-back.svg" class="view-back"></button>
-        <h1 class="text-center text-2xl font-righteous text-white">
+        <h1 class="text-center text-2xl text-white">
             RITMO CARDIACO
         </h1>
         <button id="infoButton"><img src="Public/assets/informacion.svg" class="view-back"></button>
     </div>
 
-    <script>
+    <div class="bg-white shadow-md rounded-lg p-8 max-w-md w-full mt-10">
+        <form id="userForm">
+            <div class="mb-4">
+                <label for="name" class="block  mb-2">Nombre</label>
+                <input type="text" id="name" class="w-full p-2 border border-cyan-600 rounded">
+            </div>
+            <div class="mb-4">
+                <label for="age" class="block  mb-2">Edad</label>
+                <input type="number" id="age" class="w-full p-2 border border-cyan-600 rounded">
+            </div>
+            <div class="mb-4">
+                <label for="weight" class="block  mb-2">Peso Corporal (kg)</label>
+                <input type="number" id="weight" class="w-full p-2 border border-cyan-600 rounded">
+            </div>
+            <div class="mb-4">
+                <label for="height" class="blockmb-2">Estatura (cm)</label>
+                <input type="number" id="height" class="w-full p-2 border border-cyan-600 rounded">
+            </div>
+            <div class="mb-4">
+                <label for="date" class="block  mb-2">Día</label>
+                <input type="date" id="date" class="w-full p-2 border border-cyan-600 rounded">
+            </div>
+            <button type="submit" class="w-full bg-cyan-600 text-white p-2 rounded hover:bg-cyan-700">Enviar</button>
+        </form>
+    </div>
+
+    <div id="calculationModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
+        <div class="bg-white p-5 rounded shadow-lg text-center">
+            <h3 class="text-xl  mb-4">Calculando Ritmo Cardíaco...</h3>
+            <p>Por favor, espera un momento.</p>
+        </div>
+    </div>
+
+    <div id="reportModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
+        <div class="bg-white p-5 rounded shadow-lg text-center max-w-sm w-full">
+            <h3 class="text-xl text-cyan-600 mb-4">Reporte de Ritmo Cardíaco</h3>
+            <p id="reportContent"></p>
+            <button id="closeReportButton" class="mt-4 bg-cyan-600 text-white p-2 rounded hover:bg-cyan-700">Entendido</button>
+        </div>
+    </div>
+
+    <button id="historyButton" class="fixed bottom-5 right-5 bg-cyan-600 text-white p-3 rounded-full hover:bg-cyan-700">
+        <img src="Public/assets/reloj-tres.svg" alt="Historial" class="w-6 h-6">
+    </button>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-analytics.js";
+        import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDlag2PsQ--E69R1oIUvCBuuoS0Th561Mc",
+            authDomain: "signtalker-2481c.firebaseapp.com",
+            projectId: "signtalker-2481c",
+            storageBucket: "signtalker-2481c.appspot.com",
+            messagingSenderId: "133777415790",
+            appId: "1:133777415790:web:08aec665963a34b0aa107f",
+            measurementId: "G-Q564WRH8Q8"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getFirestore(app);
+
         document.querySelector('.view-back').addEventListener('click', function() {
-      loadPartialView('audio-app', '.init', false);
-      });
-  </script>
+            loadPartialView('opciones-app', '.init', false);
+        });
+
+        document.getElementById('userForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const age = document.getElementById('age').value;
+            const weight = document.getElementById('weight').value;
+            const height = document.getElementById('height').value;
+            const date = document.getElementById('date').value;
+
+            // Show calculation modal
+            document.getElementById('calculationModal').style.display = 'flex';
+
+            // Simulate calculation delay
+            setTimeout(async () => {
+                document.getElementById('calculationModal').style.display = 'none';
+
+                // Calculate heart rate (example calculation)
+                const heartRate = (220 - age) * 0.7;
+
+                // Show report modal
+                const reportContent = `
+                    Nombre: ${name}<br>
+                    Edad: ${age}<br>
+                    Peso Corporal: ${weight} kg<br>
+                    Estatura: ${height} cm<br>
+                    Día: ${date}<br>
+                    Ritmo Cardíaco Estimado: ${heartRate} bpm
+                `;
+                document.getElementById('reportContent').innerHTML = reportContent;
+                document.getElementById('reportModal').style.display = 'flex';
+
+                try {
+                    await addDoc(collection(db, "users"), {
+                        name: name,
+                        age: age,
+                        weight: weight,
+                        height: height,
+                        date: date,
+                        heartRate: heartRate
+                    });
+                } catch (e) {
+                    console.error("Error adding document: ", e);
+                }
+            }, 2000);
+        });
+
+        document.getElementById('closeReportButton').addEventListener('click', () => {
+            document.getElementById('reportModal').style.display = 'none';
+            document.getElementById('userForm').reset();
+        });
+
+        document.getElementById('historyButton').addEventListener('click', async () => {
+            const querySnapshot = await getDocs(collection(db, "users"));
+            let historyContent = '<h3 class="text-xl text-cyan-600 mb-4">Historial</h3>';
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                historyContent += `
+                    <p>Nombre: ${data.name}<br>
+                    Edad: ${data.age}<br>
+                    Peso Corporal: ${data.weight} kg<br>
+                    Estatura: ${data.height} cm<br>
+                    Día: ${data.date}<br>
+                    Ritmo Cardíaco Estimado: ${data.heartRate} bpm</p><hr class="my-2">
+                `;
+            });
+            const historyModal = document.createElement('div');
+            historyModal.id = "historyModal";
+            historyModal.className = "fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center";
+            historyModal.innerHTML = `
+                <div class="bg-white p-5 rounded shadow-lg text-center max-w-sm w-full">
+                    ${historyContent}
+                    <button id="closeHistoryButton" class="mt-4 bg-cyan-600 text-white p-2 rounded hover:bg-cyan-700">Cerrar</button>
+                </div>
+            `;
+            document.body.appendChild(historyModal);
+
+            document.getElementById('closeHistoryButton').addEventListener('click', () => {
+                document.getElementById('historyModal').remove();
+            });
+        });
+    </script>
 
 </body>
+</html>

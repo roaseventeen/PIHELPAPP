@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "assemblyai": "^4.5.0",
+    "firebase": "^10.12.3",
     "jquery": "^3.7.1"
   }
 }
