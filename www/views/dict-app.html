@@ -26,11 +26,7 @@
           </button>
 
           <button class="respuestas-app w-40 h-40 bg-cyan-600 text-white font-righteous rounded-lg shadow-lg hover:bg-red-700 transition duration-300">
-            RESPUESTAS BASICAS 
-          </button>
-
-          <button class="palabras-app w-40 h-40 bg-cyan-600 text-white font-righteous rounded-lg shadow-lg hover:bg-yellow-700 transition duration-300">
-            PALABRAS ROMANTICAS
+            RESPUESTAS Y PREGUNTAS 
           </button>
 
           <button class="saludos-app w-40 h-40 bg-cyan-600 text-white font-righteous rounded-lg shadow-lg hover:bg-green-700 transition duration-300">
@@ -42,7 +38,7 @@
           </button>
 
           <button class="vocal-app w-40 h-40 bg-cyan-600 text-white font-righteous rounded-lg shadow-lg hover:bg-yellow-700 transition duration-300">
-            VOCABULARIO
+            DIAS Y MESES
           </button>
 
           <div id="infoModal" class="fixed z-10 inset-0 overflow-y-auto hidden">
@@ -75,12 +71,8 @@
         loadPartialView('respuestas-dict', '.init', false);
       })
 
-      document.querySelector('.palabras-app').addEventListener('click', function() {
-        loadPartialView('palabras-dict', '.init', false);
-      })
-
-      document.querySelector('.algo-app').addEventListener('click', function() {
-        loadPartialView('algo-dict', '.init', false);
+      document.querySelector('.saludos-app').addEventListener('click', function() {
+        loadPartialView('saludos-dict', '.init', false);
       })
 
       document.querySelector('.personas-app').addEventListener('click', function() {

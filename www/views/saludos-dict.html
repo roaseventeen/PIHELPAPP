@@ -10,16 +10,22 @@
     <div class="p-5 bg-cyan-600 w-full flex items-center justify-between relative">
         <button><img src="Public/assets/bx-arrow-back.svg" class="view-back"></button>
         <h1 class="text-center text-2xl font-righteous text-white">
-            SALUDOS Y DESPEDIDAS
+            SALUDOS
         </h1>
         <button id="infoButton"><img src="Public/assets/informacion.svg" class="view-back"></button>
     </div>
 
     <div class="flex justify-center">
-        <div class="p-3 mt-20 bg-cyan-600 w-80 rounded-md flex flex-col items-center text-center text-white font-righteous text-xl">
-            <h2 class="flex flex-col items-center text-center text-white font-righteous text-2xl">
-                BUENOS DÍAS
-            </h2>
+        <img src="Public/assets/saludos.PNG" class="flex flex-col items-center w-full">
+    </div>
+
+    <div id="infoModal" class="fixed z-10 inset-0 overflow-y-auto hidden">
+        <div class="flex items-center justify-center min-h-screen bg-gray-900 bg-opacity-50">
+            <div class="bg-white rounded-lg p-6 text-center shadow-lg">
+                <h2 class="text-2xl font-righteous mb-4">SALUDOS</h2>
+                <p class="mb-4 font-righteous text-gray-600">Aprende a saludar a alguien</p>
+                <button class="font-righteous text-white bg-cyan-600 hover:bg-cyan-700 py-2 px-4 rounded" id="understoodButton">Entendido</button>
+            </div>
         </div>
     </div>
 
@@ -28,6 +34,24 @@
         document.querySelector('.view-back').addEventListener('click', function() {
             loadPartialView('dict-app', '.init', false);
             });
+
+        var modal = document.getElementById('infoModal');
+
+      
+        var btn = document.getElementById('infoButton');
+
+ 
+        var closeBtn = document.getElementById('understoodButton');
+
+
+        btn.onclick = function() {
+            modal.classList.remove('hidden');
+        }
+
+
+        closeBtn.onclick = function() {
+            modal.classList.add('hidden');
+        }
 
     </script>
 
