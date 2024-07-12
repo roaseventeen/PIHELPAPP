@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body class="items-center text-center flex flex-col">
+    
+    <div class="p-5 bg-cyan-600 w-full flex items-center justify-between relative">
+        <button><img src="Public/assets/bx-arrow-back.svg" class="view-back"></button>
+        <h1 class="text-center text-2xl font-righteous text-white">
+            PREGUNTAS
+        </h1>
+        <button id="infoButton"><img src="Public/assets/informacion.svg" class="view-back"></button>
+    </div>
+
+    <div class="flex justify-center">
+        <img src="Public/assets/preguntas.PNG" class="flex flex-col items-center w-full">
+    </div>
+
+    <div id="infoModal" class="fixed z-10 inset-0 overflow-y-auto hidden">
+        <div class="flex items-center justify-center min-h-screen bg-gray-900 bg-opacity-50">
+            <div class="bg-white rounded-lg p-6 text-center shadow-lg">
+                <h2 class="text-2xl font-righteous mb-4">PREGUNTAS</h2>
+                <p class="mb-4 font-righteous">Aprende algunas preguntas básicas para mantener una conversación!</p>
+                <button class="font-righteous text-white bg-cyan-600 hover:bg-cyan-700 py-2 px-4 rounded" id="understoodButton">Entendido</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        document.querySelector('.view-back').addEventListener('click', function() {
+            loadPartialView('dict-app', '.init', false);
+            });
+
+        var modal = document.getElementById('infoModal');
+
+      
+        var btn = document.getElementById('infoButton');
+
+ 
+        var closeBtn = document.getElementById('understoodButton');
+
+
+        btn.onclick = function() {
+            modal.classList.remove('hidden');
+        }
+
+
+        closeBtn.onclick = function() {
+            modal.classList.add('hidden');
+        }
+
+    </script>
+
+</body>
+</html>

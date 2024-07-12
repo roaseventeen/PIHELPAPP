@@ -15,10 +15,100 @@
         <button id="infoButton"><img src="Public/assets/informacion.svg" class="view-back"></button>
     </div>
 
+    <div class="grid grid-cols-2 gap-4 p-4 mt-10">
+
+          <button class="abecedario-app w-40 h-40 bg-cyan-600 text-white font-righteous rounded-lg shadow-lg hover:bg-green-700 transition duration-300">
+            ABECEDARIO <!--AUDIO-->
+          </button>
+
+          <button class="preguntas-app w-40 h-40 bg-cyan-600 text-white font-righteous rounded-lg shadow-lg hover:bg-red-700 transition duration-300">
+            PREGUNTAS 
+          </button>
+
+          <button class="respuestas-app w-40 h-40 bg-cyan-600 text-white font-righteous rounded-lg shadow-lg hover:bg-red-700 transition duration-300">
+            RESPUESTAS BASICAS 
+          </button>
+
+          <button class="palabras-app w-40 h-40 bg-cyan-600 text-white font-righteous rounded-lg shadow-lg hover:bg-yellow-700 transition duration-300">
+            PALABRAS ROMANTICAS
+          </button>
+
+          <button class="saludos-app w-40 h-40 bg-cyan-600 text-white font-righteous rounded-lg shadow-lg hover:bg-green-700 transition duration-300">
+            SALUDOS Y DESPEDIDAS
+          </button>
+
+          <button class="personas-app w-40 h-40 bg-cyan-600 text-white font-righteous rounded-lg shadow-lg hover:bg-red-700 transition duration-300">
+            PERSONAS<!--TEXTO SIN ESCUCHARSE-->
+          </button>
+
+          <button class="vocal-app w-40 h-40 bg-cyan-600 text-white font-righteous rounded-lg shadow-lg hover:bg-yellow-700 transition duration-300">
+            VOCABULARIO
+          </button>
+
+          <div id="infoModal" class="fixed z-10 inset-0 overflow-y-auto hidden">
+            <div class="flex items-center justify-center min-h-screen bg-gray-900 bg-opacity-50">
+                <div class="bg-white rounded-lg p-6 text-center shadow-lg">
+                    <h2 class="text-2xl font-righteous mb-4">DICCIONARIO</h2>
+                    <p class="mb-4 font-righteous">En este diccionario de lengua de señas podrás encontrar las palabras que buscas</p>
+                    <button class="font-righteous text-white bg-cyan-600 hover:bg-cyan-700 py-2 px-4 rounded" id="understoodButton">Entendido</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
     <script>
+
         document.querySelector('.view-back').addEventListener('click', function() {
-      loadPartialView('audio-app', '.init', false);
+      loadPartialView('opciones-app', '.init', false);
       });
+
+      document.querySelector('.abecedario-app').addEventListener('click', function() {
+        loadPartialView('abecedario-dict', '.init', false);
+      })
+
+      document.querySelector('.preguntas-app').addEventListener('click', function() {
+        loadPartialView('preguntas-dict', '.init', false);
+      })
+
+      document.querySelector('.respuestas-app').addEventListener('click', function() {
+        loadPartialView('respuestas-dict', '.init', false);
+      })
+
+      document.querySelector('.palabras-app').addEventListener('click', function() {
+        loadPartialView('palabras-dict', '.init', false);
+      })
+
+      document.querySelector('.algo-app').addEventListener('click', function() {
+        loadPartialView('algo-dict', '.init', false);
+      })
+
+      document.querySelector('.personas-app').addEventListener('click', function() {
+        loadPartialView('personas-dict', '.init', false);
+      })
+
+      document.querySelector('.vocal-app').addEventListener('click', function() {
+        loadPartialView('vocal-dict', '.init', false);
+      })
+      
+      var modal = document.getElementById('infoModal');
+
+      
+        var btn = document.getElementById('infoButton');
+
+ 
+        var closeBtn = document.getElementById('understoodButton');
+
+
+        btn.onclick = function() {
+            modal.classList.remove('hidden');
+        }
+
+
+        closeBtn.onclick = function() {
+            modal.classList.add('hidden');
+        }
+
   </script>
 
 </body>
