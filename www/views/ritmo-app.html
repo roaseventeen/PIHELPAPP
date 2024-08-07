@@ -67,7 +67,7 @@
     </div>
 
     <button id="historyButton" class="fixed bottom-5 right-5 bg-cyan-600 text-white p-3 rounded-full hover:bg-cyan-700">
-        <img src="Public/assets/reloj-tres.svg" alt="Historial" class="w-6 h-6">
+        <img src="Public/assets/reloj-tres.svg" alt="Historial" class="w-6 h-6 overflow-scroll">
     </button>
 
     <script type="module">
@@ -148,7 +148,7 @@
 
         document.getElementById('historyButton').addEventListener('click', async () => {
             const querySnapshot = await getDocs(collection(db, "users"));
-            let historyContent = '<h3 class="text-xl text-cyan-600 mb-4">Historial</h3>';
+            let historyContent = '<h3 class="text-xl text-cyan-600 mb-4 overflow-scroll">Historial</h3>';
             querySnapshot.forEach((doc) => {
                 const data = doc.data();
                 historyContent += `
@@ -164,10 +164,9 @@
             historyModal.id = "historyModal";
             historyModal.className = "fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center";
             historyModal.innerHTML = `
-                <div class="bg-white p-5 rounded shadow-lg text-center max-w-sm w-full">
+                <div class="bg-white p-5 rounded shadow-lg text-center max-w-sm w-full max-h-96 overflow-y-auto">
                     ${historyContent}
                     <button id="closeHistoryButton" class="mt-4 bg-cyan-600 text-white p-2 rounded hover:bg-cyan-700">Cerrar</button>
-                </div>
             `;
             document.body.appendChild(historyModal);
 
